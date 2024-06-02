@@ -17,6 +17,7 @@ jobs:
         uses: ./
         with:
           tool_name: actionlint
+          filter_mode: file
 
   reviewdog:
     name: runner / reviewdog

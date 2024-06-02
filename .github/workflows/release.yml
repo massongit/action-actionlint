@@ -49,6 +49,7 @@ jobs:
       # Create release.
       - uses: shogo82148/actions-create-release@v1
         if: "${{ !steps.bumpr.outputs.skip }}"
+        id: test
         with:
           tag_name: ${{ steps.bumpr.outputs.next_version }}
           release_name: Release ${{ steps.bumpr.outputs.next_version }}

@@ -17,6 +17,10 @@ jobs:
         uses: ./
         with:
           tool_name: actionlint
+      - run: |
+          a=1
+          echo $a
+          echo $(echo $a)
 
   reviewdog:
     name: runner / reviewdog

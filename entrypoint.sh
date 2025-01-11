@@ -11,7 +11,7 @@ fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
-output="$(for r in $(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}); do
+output="$(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS} | while read r; do
   error_level="$(echo "$r" | sed -e 's/^.* shellcheck reported issue in this script: [^:]*:\([^:]*\):.*$/\1/g')"
   echo "$r" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g"
 done)"

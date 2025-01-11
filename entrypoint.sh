@@ -17,7 +17,7 @@ echo "$error_level"
 echo "$output" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g"
 
 # shellcheck disable=SC2086
-echo "$output" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g" \
+echo "$output" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)\$/\1$error_level \2/g" \
     | reviewdog \
         -efm="%f:%l:%c:%t %m" \
         -name="${INPUT_TOOL_NAME}" \

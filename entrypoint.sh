@@ -14,6 +14,7 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 output="$(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})"
 error_level="$(echo "$output" | sed -e 's/^.* shellcheck reported issue in this script: [^:]*:\([^:]*\):.*$/\1/g')"
 echo "$error_level"
+echo "$output" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g"
 
 # shellcheck disable=SC2086
 echo "$output" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g" \

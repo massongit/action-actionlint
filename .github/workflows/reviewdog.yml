@@ -1,12 +1,6 @@
 name: reviewdog
 on: [pull_request]
 
-permissions:
-  contents: read
-  checks: write
-  pull-requests: write
-  issues: write
-
 jobs:
   actionlint:
     name: runner / actionlint

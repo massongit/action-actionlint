@@ -10,6 +10,7 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
+echo aaaaa
 
 # shellcheck disable=SC2086
 actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}

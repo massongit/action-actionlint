@@ -16,7 +16,7 @@ echo "$raw_output"
 output=""
 echo "$raw_output" | while read r; do
   error_level="$(echo "$r" | sed -e 's/^.* shellcheck reported issue in this script: [^:]*:\([^:]\)[^:]*:.*$/\1/g')"
-  output+="$(echo "$r" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g")\n"
+  output="$output$(echo "$r" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g")\n"
 done
 echo "$output"
 

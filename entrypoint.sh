@@ -12,13 +12,13 @@ fi
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 raw_output="$(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})"
-echo -n "$raw_output"
+echo "$raw_output"
 output=""
-echo -n "$raw_output" | while read r; do
+echo "$raw_output" | while read r; do
   error_level="$(echo "$r" | sed -e 's/^.* shellcheck reported issue in this script: [^:]*:\([^:]\)[^:]*:.*$/\1/g')"
   output+="$(echo "$r" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g")\n"
 done
-echo -n "$output"
+echo "$output"
 
 # shellcheck disable=SC2086
 echo -n "$output" \

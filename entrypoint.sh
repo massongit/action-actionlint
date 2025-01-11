@@ -21,7 +21,7 @@ done < <(echo "$raw_output")
 echo -e "$output"
 
 # shellcheck disable=SC2086
-echo -n "$output" \
+echo -e "$output" \
     | reviewdog \
         -efm="%f:%l:%c:%t %m" \
         -name="${INPUT_TOOL_NAME}" \

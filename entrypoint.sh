@@ -10,10 +10,21 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
-echo aaaaa
+
+output="$(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})"
+error_level="$(echo "$output" | sed -e 's/^.* shellcheck reported issue in this script: [^:]*:\([^:]*\):.*$/\1/g')"
 
 # shellcheck disable=SC2086
-actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}
+echo "$output" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1$error_level \2/g" \
+    | reviewdog \
+        -efm="%f:%l:%c:%t %m" \
+        -name="${INPUT_TOOL_NAME}" \
+        -reporter="${INPUT_REPORTER}" \
+        -filter-mode="${INPUT_FILTER_MODE}" \
+        -fail-level="${INPUT_FAIL_LEVEL}" \
+        -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
+        -level="${INPUT_LEVEL}" \
+        ${INPUT_REVIEWDOG_FLAGS}
 exit_code=$?
 
 exit $exit_code

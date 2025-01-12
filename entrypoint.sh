@@ -14,7 +14,7 @@ output=""
 
 while read r; do
   shellcheck_str="shellcheck reported issue in this script:"
-  error_level=
+  error_level=e
 
   if echo "${r}" | grep "${shellcheck_str}"; then
     error_level="$(echo "${r}" | sed -e "s/^.* ${shellcheck_str} [^:]*:\([^:]\)[^:]*:.*$/\1/g")"

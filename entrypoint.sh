@@ -18,7 +18,7 @@ while read r; do
     error_level="$(echo "${r}" | sed -e "s/^.* ${shellcheck_str} [^:]*:\([^:]\)[^:]*:.*$/\1/g")"
     output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g")\n"
   else
-    output="${output}${r}\n"
+    output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1e \2/g")\n"
   fi
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})
 

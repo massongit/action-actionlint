@@ -10,8 +10,6 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
-actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}
-echo
 output=""
 
 while read r; do
@@ -23,6 +21,8 @@ while read r; do
     output="${output}${r}\n"
   fi
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})
+
+echo -e "${output}"
 
 echo -e "${output}" \
     | reviewdog \

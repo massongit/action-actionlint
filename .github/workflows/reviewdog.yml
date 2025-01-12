@@ -11,7 +11,7 @@ jobs:
         uses: ./
         with:
           tool_name: actionlint
-          fail_level: error
+          fail_level: info
       - run: |
           a=.
           echo $a

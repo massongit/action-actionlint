@@ -12,7 +12,8 @@ jobs:
         with:
           tool_name: actionlint
           fail_level: error
-      - run: |
+      - if: contains(fromJson('["main","release","dev"'), github.ref_name)
+        run: |
           cd dir; process *; cd ..;         # Use subshells instead
 
   reviewdog:

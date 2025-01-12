@@ -10,6 +10,8 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
+actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}
+echo
 output=""
 
 while read r; do

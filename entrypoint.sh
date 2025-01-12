@@ -13,8 +13,13 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 output=""
 
 while read r; do
-  error_level="$(echo "${r}" | sed -e 's/^.* shellcheck reported issue in this script: [^:]*:\([^:]\)[^:]*:.*$/\1/g')"
-  output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g")\n"
+  shellcheck_str="shellcheck reported issue in this script:"
+  if echo "${r}" | grep "${shellcheck_str}"; then
+    error_level="$(echo "${r}" | sed -e "s/^.* ${shellcheck_str} [^:]*:\([^:]\)[^:]*:.*$/\1/g")"
+    output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g")\n"
+  else
+    output="${output}${r}\n"
+  fi
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})
 
 echo -e "${output}" \

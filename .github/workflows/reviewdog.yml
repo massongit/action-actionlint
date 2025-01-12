@@ -13,7 +13,6 @@ jobs:
           tool_name: actionlint
           fail_level: error
       - run: |
-          echo "${{ format('{0}{1}', 1, 2, 3) }}"
           cd dir; process *; cd ..;         # Use subshells instead
 
   reviewdog:

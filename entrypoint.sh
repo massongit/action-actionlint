@@ -10,7 +10,6 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
-actionlint -shellcheck 'shellcheck -f json' -format '{{json .}}'  ${INPUT_ACTIONLINT_FLAGS}
 output=""
 
 while read r; do
@@ -21,12 +20,8 @@ while read r; do
     error_level="$(echo "${r}" | sed -e "s/^.* ${shellcheck_str} [^:]*:\([^:]\)[^:]*:.*$/\1/g")"
   fi
 
-  output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g")\n"
-done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})
-
-echo -e "${output}"
-
-echo -e "${output}" \
+  echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g"
+done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}) \
     | reviewdog \
         -efm="%f:%l:%c:%t %m" \
         -name="${INPUT_TOOL_NAME}" \

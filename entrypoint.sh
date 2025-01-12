@@ -13,13 +13,16 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 while read r; do
   shellcheck_str=" shellcheck reported issue in this script: "
-  error_level=e
+  severity=e
 
   if echo "${r}" | grep "${shellcheck_str}"; then
-    error_level="$(echo "${r}" | sed -e "s/^.*${shellcheck_str}[^:]*:\([^:]\).*$/\1/g")"
+    s="$(echo "${r}" | sed -e "s/^.*${shellcheck_str}[^:]*:\([^:]\).*$/\1/g")"
+    if [ "${s}" = 'e' ] || [ "${s}" = 'w' ] || [ "${s}" = 'i' ] || [ "${s}" = 'n' ]; then
+      severity="${s}"
+    fi
   fi
 
-  echo "${error_level}:${r}"
+  echo "${severity}:${r}"
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}) \
     | reviewdog \
         -efm="%t:%f:%l:%c: %m" \

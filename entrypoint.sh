@@ -12,11 +12,11 @@ fi
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 while read r; do
-  shellcheck_str="shellcheck reported issue in this script:"
-  error_level=
+  shellcheck_str=" shellcheck reported issue in this script: "
+  error_level=e
 
   if echo "${r}" | grep "${shellcheck_str}"; then
-    error_level="$(echo "${r}" | sed -e "s/^.* ${shellcheck_str} [^:]*:\([^:]\)[^:]*:.*$/\1/g")"
+    error_level="$(echo "${r}" | sed -e "s/^.*${shellcheck_str}[^:]*:\([^:]\).*$/\1/g")"
   fi
 
   echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g"

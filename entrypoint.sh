@@ -10,7 +10,7 @@ if [ -n "${GITHUB_WORKSPACE}" ] ; then
 fi
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
-actionlint -format '{{json .}}'  ${INPUT_ACTIONLINT_FLAGS}
+actionlint -shellcheck 'shellcheck -f json' -format '{{json .}}'  ${INPUT_ACTIONLINT_FLAGS}
 output=""
 
 while read r; do

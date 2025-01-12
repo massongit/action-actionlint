@@ -22,7 +22,7 @@ while read r; do
   echo "${error_level}:${r}"
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}) \
     | reviewdog \
-        -efm="%t:%f:%l:%c %m" \
+        -efm="%t:%f:%l:%c: %m" \
         -name="${INPUT_TOOL_NAME}" \
         -reporter="${INPUT_REPORTER}" \
         -filter-mode="${INPUT_FILTER_MODE}" \

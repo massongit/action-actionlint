@@ -12,8 +12,8 @@ jobs:
         with:
           tool_name: actionlint
           fail_level: error
-      - if: contains(fromJson('["main","release","dev"'), github.ref_name)
-        run: |
+      - run: |
+          echo "${{ format('{0}{1}', 1, 2, 3) }}"
           cd dir; process *; cd ..;         # Use subshells instead
 
   reviewdog:

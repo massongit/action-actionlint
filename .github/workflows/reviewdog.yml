@@ -15,7 +15,7 @@ jobs:
       - run: |
           a=.
           echo $a
-          for f in $(echo $a); do
+          for f in $a; do
             wcho $f
           done
 

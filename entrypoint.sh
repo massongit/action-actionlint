@@ -14,12 +14,13 @@ output=""
 
 while read r; do
   shellcheck_str="shellcheck reported issue in this script:"
+  error_level=e
+
   if echo "${r}" | grep "${shellcheck_str}"; then
     error_level="$(echo "${r}" | sed -e "s/^.* ${shellcheck_str} [^:]*:\([^:]\)[^:]*:.*$/\1/g")"
-    output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g")\n"
-  else
-    output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1e \2/g")\n"
   fi
+
+  output="${output}$(echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g")\n"
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS})
 
 echo -e "${output}"

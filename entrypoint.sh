@@ -19,10 +19,10 @@ while read r; do
     error_level="$(echo "${r}" | sed -e "s/^.*${shellcheck_str}[^:]*:\([^:]\).*$/\1/g")"
   fi
 
-  echo "${r}" | sed -e "s/^\([^:]*:[^:]*:[^:]*:\) \(.*\)$/\1${error_level} \2/g"
+  echo "${error_level}:${r}"
 done < <(actionlint -oneline ${INPUT_ACTIONLINT_FLAGS}) \
     | reviewdog \
-        -efm="%f:%l:%c:%t %m" \
+        -efm="%t:%f:%l:%c %m" \
         -name="${INPUT_TOOL_NAME}" \
         -reporter="${INPUT_REPORTER}" \
         -filter-mode="${INPUT_FILTER_MODE}" \
